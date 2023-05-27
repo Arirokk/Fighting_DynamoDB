@@ -1,0 +1,13 @@
+#spring:
+#  datasource:
+#    url: jdbc:mariadb://mariadb:3306/test?autoReconnect=true&useSSL=false&serverTimezone=UTC
+#    username: root
+#    password: test
+#    driverClassName: org.mariadb.jdbc.Driver
+
+#  jpa:
+#    showSql: true
+#
+#aws:
+#  dynamodb:
+#    endpoint: http://localstack:4566

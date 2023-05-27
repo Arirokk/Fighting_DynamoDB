@@ -1,0 +1,46 @@
+version: '3.9'
+
+services:
+  database:
+    command: "-jar DynamoDBLocal.jar -port 7999"
+    image: "amazon/dynamodb-local:latest"
+    container_name: database
+    ports:
+      - "7999:7999"
+    environment:
+      AWS_ACCESS_KEY_ID: test
+      AWS_SECRET_ACCESS_KEY: test
+      AWS_DEFAULT_REGION: us-east-1
+    volumes:
+      - database:/home/dynamodblocal/data
+    working_dir: /home/dynamodblocal
+
+  comp_with_cli:
+    depends_on:
+      - database
+    image: amazon/aws-cli
+    container_name: comp_with_cli
+    ports:
+      - "8001:8001"
+    environment:
+      AWS_ACCESS_KEY_ID: test
+      AWS_SECRET_ACCESS_KEY: test
+      AWS_DEFAULT_REGION: us-east-1
+    volumes:
+      - ./scripts:/scripts
+    entrypoint: /scripts/dynamodb-create-table.sh
+
+  drones:
+    build:
+      context: ./
+      dockerfile: drones/Dockerfile
+    ports:
+      - "8080:8080"
+    entrypoint: java -jar drones.jar
+    stop_signal: SIGINT
+    depends_on:
+      - database
+      - comp_with_cli
+
+volumes:
+  database:

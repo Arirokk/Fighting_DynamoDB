@@ -1,0 +1,19 @@
+{
+  "TableName": "drone-payload",
+  "AttributeDefinitions": [
+    {
+      "AttributeName": "droneId",
+      "AttributeType": "S"
+    }
+  ],
+  "KeySchema": [
+    {
+      "AttributeName": "droneId",
+      "KeyType": "HASH"
+    }
+  ],
+  "ProvisionedThroughput": {
+    "ReadCapacityUnits": 1,
+    "WriteCapacityUnits": 1
+  }
+}
