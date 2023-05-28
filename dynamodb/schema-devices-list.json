@@ -1,8 +1,8 @@
 {
-  "TableName": "drone-payload",
+  "TableName": "devices-list",
   "AttributeDefinitions": [
     {
-      "AttributeName": "droneId",
+      "AttributeName": "deviceId",
       "AttributeType": "S"
     }
   ],
