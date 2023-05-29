@@ -2,13 +2,13 @@
   "TableName": "devices-list",
   "AttributeDefinitions": [
     {
-      "AttributeName": "deviceId",
+      "AttributeName": "device_name",
       "AttributeType": "S"
     }
   ],
   "KeySchema": [
     {
-      "AttributeName": "droneId",
+      "AttributeName": "device_name",
       "KeyType": "HASH"
     }
   ],

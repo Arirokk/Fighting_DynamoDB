@@ -28,6 +28,7 @@ services:
       AWS_DEFAULT_REGION: us-east-1
     volumes:
       - ./scripts:/scripts
+      - ./dynamodb:/dynamodb
     entrypoint: /scripts/dynamodb-create-table.sh
 
   drones:
@@ -37,6 +38,10 @@ services:
     ports:
       - "8080:8080"
     entrypoint: java -jar drones.jar
+    environment:
+      AWS_DEFAULT_REGION: us-east-1
+      AWS_ACCESS_KEY_ID: test
+      AWS_SECRET_ACCESS_KEY: test
     stop_signal: SIGINT
     depends_on:
       - database
