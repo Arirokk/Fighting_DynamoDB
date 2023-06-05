@@ -1,36 +1,49 @@
 package ge.anaklia.configuration;
 
+import com.amazonaws.auth.AWSCredentials;
+import com.amazonaws.auth.AWSCredentialsProvider;
+import com.amazonaws.auth.AWSStaticCredentialsProvider;
+import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.client.builder.AwsClientBuilder;
-import com.amazonaws.regions.Regions;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
-import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient;
+import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClientBuilder;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapperConfig;
-import ge.anaklia.configuration.properties.DynamoDBProperties;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class DynamoDBConfig {
 
+    @Value("${aws.access.key}")
+    private String awsAccessKey;
+    @Value("${aws.access.secret-key}")
+    private String awsSecretKey;
+    @Value("${aws.dynamodb.endpoint}")
+    private String awsDynamoDBEndPoint;
+    @Value("${aws.region:}")
+    private String awsRegion;
+
     @Bean
-    public DynamoDBMapper dynamoDBMapper(DynamoDBProperties properties) {
-        var endpointConfiguration = new AwsClientBuilder.EndpointConfiguration(
-            properties
-                .getEndpoint(),
-            Regions.US_EAST_1
-                .getName());
+    public AWSCredentials amazonAWSCredentials() {
+        return new BasicAWSCredentials(awsAccessKey, awsSecretKey);
+    }
 
-        AmazonDynamoDB amazonDynamoDB = AmazonDynamoDBClient.builder()
-            .withEndpointConfiguration(endpointConfiguration)
-            .build();
+    public AWSCredentialsProvider amazonAWSCredentialsProvider() {
+        return new AWSStaticCredentialsProvider(amazonAWSCredentials());
+    }
 
-        DynamoDBMapperConfig config = DynamoDBMapperConfig.builder()
-            .withSaveBehavior(DynamoDBMapperConfig.SaveBehavior.UPDATE)
-            .withConsistentReads(DynamoDBMapperConfig.ConsistentReads.CONSISTENT)
-            .build();
+    public AmazonDynamoDB amazonDynamoDB() {
+        return AmazonDynamoDBClientBuilder.standard()
+                .withEndpointConfiguration(new AwsClientBuilder.EndpointConfiguration(
+                        awsDynamoDBEndPoint, awsRegion))
+                .withCredentials(amazonAWSCredentialsProvider())
+                .build();
+    }
 
-        return new DynamoDBMapper(amazonDynamoDB, config);
+    @Bean
+    public DynamoDBMapper mapper() {
+        return new DynamoDBMapper(amazonDynamoDB());
     }
 
 }

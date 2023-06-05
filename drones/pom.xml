@@ -31,19 +31,14 @@
             <version>${spring.boot.version}</version>
             <scope>test</scope>
         </dependency>
-<!--        <dependency>-->
-<!--            <groupId>com.github.derjust</groupId>-->
-<!--            <artifactId>spring-data-dynamodb</artifactId>-->
-<!--            <version>5.1.0</version>-->
-<!--        </dependency>-->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.jaxel</groupId>
-            <artifactId>data-ingest</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
+            <groupId>com.amazonaws</groupId>
+            <artifactId>aws-java-sdk-dynamodb</artifactId>
+            <version>1.12.478</version>
         </dependency>
     </dependencies>
 

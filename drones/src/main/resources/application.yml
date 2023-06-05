@@ -1,3 +1,7 @@
 aws:
   dynamodb:
-    endpoint: http://localhost:7999/
+    endpoint: http://database:7999/
+  access:
+    key: test
+    secret-key: test
+  region: us-east-1

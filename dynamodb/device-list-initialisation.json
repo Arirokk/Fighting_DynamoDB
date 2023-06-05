@@ -1,0 +1,68 @@
+{
+  "devices-list": [
+    {
+      "PutRequest": {
+        "Item": {
+          "device_name": {"S": "gas_exploration"},
+          "sensors": {"L":[
+            {"S": "gas_sensor"}
+          ]}
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "device_name": {"S": "gps"},
+          "sensors": {"L":[
+            {"S": "gps_sensors"}
+          ]}
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "device_name": {"S": "vertical_obstacle"},
+          "sensors": {"L":[
+            {"S": "top_obstacle"},
+            {"S": "bottom_obstacle"}
+          ]}
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "device_name": {"S": "horizontal_obstacle"},
+          "sensors": {"L":[
+            {"S": "front_obstacle"},
+            {"S": "rear_obstacle"}
+          ]}
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "device_name": {"S": "desc_asc"},
+          "sensors": {"L":[
+            {"S": "pressure"},
+            {"S": "depth"}
+          ]}
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "device_name": {"S": "engine"},
+          "sensors": {"L":[
+            {"S": "left_engine"},
+            {"S": "right_engine"}
+          ]}
+        }
+      }
+    }
+  ]
+}

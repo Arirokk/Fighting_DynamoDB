@@ -12,34 +12,9 @@ aws dynamodb create-table \
   --endpoint-url http://database:7999 \
   --region us-east-1
 
-aws dynamodb put-item --endpoint-url http://database:7999 \
-  --table-name devices-list \
-  --item \
-  '{"device_name": {"S": "engine"}}'
-
-aws dynamodb put-item --endpoint-url http://database:7999 \
-  --table-name devices-list \
-  --item \
-  '{"device_name": {"S": "desc_asc"}}'
-
-aws dynamodb put-item --endpoint-url http://database:7999 \
-  --table-name devices-list \
-  --item \
-  '{"device_name": {"S": "horiz_obstacle"}}'
-
-aws dynamodb put-item --endpoint-url http://database:7999 \
-  --table-name devices-list \
-  --item \
-  '{"device_name": {"S": "vert_obstacle"}}'
-
-aws dynamodb put-item --endpoint-url http://database:7999 \
-  --table-name devices-list \
-  --item \
-  '{"device_name": {"S": "gps"}}'
-
-aws dynamodb put-item --endpoint-url http://database:7999 \
-  --table-name devices-list \
-  --item \
-  '{"device_name": {"S": "gas_exploration"}}'
+aws dynamodb batch-write-item \
+  --request-items file:///dynamodb/device-list-initialisation.json \
+  --endpoint-url http://database:7999 \
+  --region us-east-1
 
 tail -f /dev/null
